@@ -1,0 +1,6 @@
+main {
+   min-height: 80vh;
+}
+.navbar-collapse {
+   flex-grow: unset;
+}
