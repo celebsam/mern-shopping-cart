@@ -4,3 +4,15 @@ main {
 .navbar-collapse {
    flex-grow: unset;
 }
+
+a {
+   text-decoration: none;
+}
+
+.rating span {
+   margin: 0.1rem;
+}
+
+h4 {
+   padding: 1rem 0 0;
+}
