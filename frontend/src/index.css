@@ -16,3 +16,14 @@ a {
 h4 {
    padding: 1rem 0 0;
 }
+
+.pro-img {
+   height: 17rem;
+   object-fit: cover;
+}
+
+.pro-title {
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
