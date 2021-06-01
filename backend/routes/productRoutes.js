@@ -5,7 +5,7 @@ const router = express.Router();
 
 // fetch all products
 router.get("/", (req, res) => {
-   const products = Product.find()
+   Product.find()
       .then((product) => res.send(product))
       .catch((err) => console.log(err));
 });
@@ -18,6 +18,7 @@ router.get("/:id", (req, res) => {
             res.send(result);
          } else {
             res.status(404).send("No product found");
+            throw new Error("Product not found");
          }
       })
       .catch((err) => console.log(err));
