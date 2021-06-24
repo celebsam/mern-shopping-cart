@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Message from "../components/Message";
-import Loader from "../components/Loader";
+// import Loader from "../components/Loader";
 import { Link } from "react-router-dom";
 import {
    Button,
@@ -23,8 +23,6 @@ const CartScreen = ({ match, location, history }) => {
    const cart = useSelector((state) => state.cart);
 
    const { cartItems } = cart;
-
-   console.log(cart);
 
    useEffect(() => {
       if (productId) {
