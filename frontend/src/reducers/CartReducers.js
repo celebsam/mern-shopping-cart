@@ -1,4 +1,7 @@
-export const cartReducer = (state = { cartItems: [] }, action) => {
+export const cartReducer = (
+   state = { cartItems: [], shippingAddress: {} },
+   action
+) => {
    if (action.type === "CART_ADD_ITEM") {
       const item = action.payload;
 
@@ -18,6 +21,16 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
       return {
          ...state,
          cartItems: state.cartItems.filter((x) => x.product !== action.payload),
+      };
+   } else if (action.type === "CART_SAVE_SHIPPING_ADDRESS") {
+      return {
+         ...state,
+         shippingAddress: action.payload,
+      };
+   } else if (action.type === "CART_SAVE_PAYMENT_METHOD") {
+      return {
+         ...state,
+         paymentMethod: action.payload,
       };
    } else {
       return state;
