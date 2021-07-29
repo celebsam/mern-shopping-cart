@@ -18,18 +18,29 @@ export const userRegisterReducer = (state = {}, action) => {
       return { loading: false, userInfo: action.payload };
    } else if (action.type === "USER_REGISTER_FAIL") {
       return { loading: false, error: action.payload };
-   } else if (action.type === "USER_LOGOUT") {
-      return {};
    } else {
       return state;
    }
 };
+
 export const userDetailsReducer = (state = { user: {} }, action) => {
    if (action.type === "USER_DETAILS_REQUEST") {
       return { ...state, loading: true };
    } else if (action.type === "USER_DETAILS_SUCCESS") {
       return { loading: false, user: action.payload };
    } else if (action.type === "USER_DETAILS_FAIL") {
+      return { loading: false, error: action.payload };
+   } else {
+      return state;
+   }
+};
+
+export const userUpdateProfileReducer = (state = {}, action) => {
+   if (action.type === "USER_UPDATE_PROFILE_REQUEST") {
+      return { loading: true };
+   } else if (action.type === "USER_UPDATE_PROFILE_SUCCESS") {
+      return { loading: false, userInfo: action.payload, success: true };
+   } else if (action.type === "USER_UPDATE_PROFILE_FAIL") {
       return { loading: false, error: action.payload };
    } else {
       return state;

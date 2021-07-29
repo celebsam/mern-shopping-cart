@@ -1,7 +1,4 @@
-export const cartReducer = (
-   state = { cartItems: JSON.parse(localStorage.getItem("cartItems")) || [] },
-   action
-) => {
+export const cartReducer = (state = { cartItems: [] }, action) => {
    if (action.type === "CART_ADD_ITEM") {
       const item = action.payload;
 

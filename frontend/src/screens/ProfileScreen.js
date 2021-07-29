@@ -3,8 +3,8 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { getUserDetails } from "../actions/userActions";
-import { Link } from "react-router-dom";
+import { getUserDetails, updateUserProfile } from "../actions/userActions";
+// import { Link } from "react-router-dom";
 
 const ProfileScreen = ({ location, history }) => {
    const [name, setName] = useState("");
@@ -16,14 +16,18 @@ const ProfileScreen = ({ location, history }) => {
    const dispatch = useDispatch();
    const userDetails = useSelector((state) => state.userDetails);
    const { loading, error, user } = userDetails;
+
    const userLogin = useSelector((state) => state.userLogin);
    const { userInfo } = userLogin;
+
+   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+   const { success } = userUpdateProfile;
 
    useEffect(() => {
       if (!userInfo) {
          history.push("/login");
       } else {
-         if (!user.name) {
+         if (!user?.name) {
             dispatch(getUserDetails("profile"));
          } else {
             setName(user.name);
@@ -36,7 +40,7 @@ const ProfileScreen = ({ location, history }) => {
       if (password !== confirmPassword) {
          setMessage("Passwords do not match");
       } else {
-         //  update profile
+         dispatch(updateUserProfile({ id: user._id, name, email, password }));
       }
    };
    return (
@@ -44,6 +48,7 @@ const ProfileScreen = ({ location, history }) => {
          <Col md={3}>
             {message && <Message variant="danger">{message}</Message>}
             {error && <Message variant="danger">{error}</Message>}
+            {success && <Message variant="success">Profile Updated</Message>}
             {loading && <Loader />}
             <h2>User Profile</h2>
             <Form onSubmit={submitHandler}>

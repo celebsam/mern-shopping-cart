@@ -73,7 +73,7 @@ export const updateUserProfile = async (req, res) => {
          name: updatedUser.name,
          email: updatedUser.email,
          isAdmin: updatedUser.isAdmin,
-         token: generateToken(user._id),
+         token: generateToken(updatedUser._id),
       });
    } else {
       res.status(404).send("User not found");
