@@ -1,6 +1,6 @@
 import Order from "../models/orderModel.js";
 
-export const addOrderItems = (req, res) => {
+export const addOrderItems = async (req, res) => {
    const {
       orderItems,
       shippingPrice,
