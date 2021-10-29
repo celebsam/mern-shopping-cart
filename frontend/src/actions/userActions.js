@@ -30,6 +30,7 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: "USER_LOGOUT" });
+  dispatch({ type: "USER_LIST_RESET" });
 };
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -131,6 +132,34 @@ export const listUsers = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: "USER_LIST_FAIL",
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteUser = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: "DELETE_USER_REQUEST" });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.delete(`/api/users/${id}`, config);
+
+    dispatch({ type: "DELETE_USER_SUCCESS", payload: data });
+  } catch (error) {
+    dispatch({
+      type: "DELETE_USER_FAIL",
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

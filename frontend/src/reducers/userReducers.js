@@ -54,6 +54,20 @@ export const userListReducer = (state = { users: [] }, action) => {
     return { loading: false, users: action.payload };
   } else if (action.type === "USER_LIST_FAIL") {
     return { loading: false, error: action.payload };
+  } else if (action.type === "USER_LIST_RESET") {
+    return { users: [] };
+  } else {
+    return state;
+  }
+};
+
+export const userDeleteReducer = (state = {}, action) => {
+  if (action.type === "DELETE_USER_REQUEST") {
+    return { loading: true };
+  } else if (action.type === "DELETE_USER_SUCCESS") {
+    return { loading: false, success: true };
+  } else if (action.type === "DELETE_USER_FAIL") {
+    return { loading: false, error: action.payload };
   } else {
     return state;
   }
