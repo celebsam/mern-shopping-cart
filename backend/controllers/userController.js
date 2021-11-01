@@ -103,3 +103,38 @@ export const deleteUser = async (req, res) => {
   await User.findByIdAndDelete(id);
   res.json({ message: "User deleted" });
 };
+
+// @desc Get users by id
+//  @route GET /api/users/:id
+//  @access Private/Admin
+export const getUserById = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id).select("-password");
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.json(user);
+};
+
+// @desc Update user
+//  @route PUT /api/users/edit/:id
+//  @access Private/Admin
+export const updateUser = async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.isAdmin = req.body.isAdmin;
+
+    const updatedUser = await user.save();
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404).json({ message: "User not found" });
+  }
+};
