@@ -3,7 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { getUserDetails } from "../actions/userActions";
+import { getUserDetails, updateUserAction } from "../actions/userActions";
 import FormContainer from "../components/FormContainer";
 import { Link } from "react-router-dom";
 
@@ -17,7 +17,18 @@ const UserEditScreen = ({ match, history }) => {
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
+  const userUpdate = useSelector((state) => state.userUpdate);
+
+  const {
+    loading: updateLoading,
+    error: updateError,
+    success: updateSuccess,
+  } = userUpdate;
+
   useEffect(() => {
+    if (updateSuccess) {
+      history.push("/admin/userlist");
+    }
     if (!user.name || user._id !== id) {
       dispatch(getUserDetails(id));
     } else {
@@ -25,9 +36,10 @@ const UserEditScreen = ({ match, history }) => {
       setEmail(user.email);
       setIsAdmin(user.isAdmin);
     }
-  }, [dispatch, id, user]);
+  }, [dispatch, id, user, history, updateSuccess]);
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(updateUserAction(id, { name, email, isAdmin }));
   };
   return (
     <FormContainer>
@@ -67,7 +79,7 @@ const UserEditScreen = ({ match, history }) => {
           </Form.Group>
 
           <Button className="mt-4" type="submit" variant="primary">
-            Sign In
+            Update
           </Button>
         </Form>
       )}

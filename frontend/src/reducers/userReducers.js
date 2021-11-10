@@ -72,3 +72,17 @@ export const userDeleteReducer = (state = {}, action) => {
     return state;
   }
 };
+
+export const userUpdateReducer = (state = { user: {} }, action) => {
+  if (action.type === "USER_UPDATE_REQUEST") {
+    return { loading: true };
+  } else if (action.type === "USER_UPDATE_SUCCESS") {
+    return { loading: false, success: true };
+  } else if (action.type === "USER_UPDATE_FAIL") {
+    return { loading: false, error: action.payload };
+  } else if (action.type === "USER_UPDATE_RESET") {
+    return {};
+  } else {
+    return state;
+  }
+};
