@@ -4,7 +4,11 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { deleteUser, listProducts } from "../actions/productActions";
+import {
+  deleteUser,
+  listProducts,
+  productCreateAction,
+} from "../actions/productActions";
 import { useHistory } from "react-router";
 
 const ProductListScreen = ({ match }) => {
@@ -14,14 +18,29 @@ const ProductListScreen = ({ match }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const productCreate = useSelector((state) => state.productCreate);
+
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate;
+
   const history = useHistory();
 
   useEffect(() => {
+    dispatch({ type: "PRODUCT_CREATE_RESET" });
+
     if (!userInfo?.isAdmin) {
       return history.push("/");
     }
-    dispatch(listProducts());
-  }, [dispatch, history, userInfo]);
+    if (successCreate) {
+      history.push(`/admin/product/${createdProduct._id}/edit`);
+    } else {
+      dispatch(listProducts());
+    }
+  }, [dispatch, history, userInfo, successCreate, createdProduct]);
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure you want to delete")) {
@@ -31,6 +50,7 @@ const ProductListScreen = ({ match }) => {
 
   const createProductHandler = () => {
     console.log("The product has been created.");
+    dispatch(productCreateAction());
   };
   return (
     <>
