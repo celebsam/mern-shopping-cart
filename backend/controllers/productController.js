@@ -1,9 +1,21 @@
 import Product from "../models/productModel.js";
 
-export const getProducts = (req, res) => {
-  Product.find()
-    .then((product) => res.send(product))
-    .catch((err) => console.log(err));
+// export const getProducts = (req, res) => {
+//   Product.find()
+//     .then((product) => res.send(product))
+//     .catch((err) => console.log(err));
+// };
+
+export const getProducts = async (req, res) => {
+  try {
+    const product = await Product.find({});
+    if (product.length < 1) {
+      return res.status(606).send("No product found");
+    }
+    res.send(product);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getSingleProduct = (req, res) => {
