@@ -10,7 +10,7 @@ export const getProducts = async (req, res) => {
   try {
     const product = await Product.find({});
     if (product.length < 1) {
-      return res.status(606).send("No product found");
+      return res.status(404).send("No product found");
     }
     res.send(product);
   } catch (error) {
