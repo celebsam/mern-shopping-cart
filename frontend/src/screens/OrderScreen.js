@@ -9,7 +9,6 @@ import Loader from "../components/Loader";
 const OrderScreen = ({ match }) => {
   const orderId = match.params.id;
   const dispatch = useDispatch();
-  //  calc prices
 
   const orderDetails = useSelector((state) => state.orderDetails);
 
