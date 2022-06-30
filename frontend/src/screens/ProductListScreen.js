@@ -21,8 +21,8 @@ const ProductListScreen = ({ match }) => {
   const productCreate = useSelector((state) => state.productCreate);
 
   const {
-    loading: loadingCreate,
-    error: errorCreate,
+    // loading: loadingCreate,
+    // error: errorCreate,
     success: successCreate,
     product: createdProduct,
   } = productCreate;
