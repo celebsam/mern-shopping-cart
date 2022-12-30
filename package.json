@@ -1,5 +1,5 @@
 {
-  "name": "brad-mern-shopping-cart",
+  "name": "mern-shopping-cart",
   "version": "1.0.0",
   "description": "MERN Shopping cart",
   "main": "server.js",
